@@ -2,11 +2,11 @@ package test;
 
 import static org.junit.Assert.*;
 
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 import controller.FeuUtils;
+import exception.NombreNegatifException;
 
 /**
  * Classe qui teste les methodes de FeuUtils
@@ -22,31 +22,44 @@ public class FeuUtilsTest
     }
     
     @Test
-    public void estPremierNonPremierTest()
+    public void estPremierNonPremierTest() throws NombreNegatifException
     {
         assertEquals(FeuUtils.estPremier(6), false);
     }
     
     @Test
-    public void estPremierNombre1Test()
+    public void estPremierNombre0Test() throws NombreNegatifException
+    {
+        assertEquals(FeuUtils.estPremier(0), false);
+    }
+    
+    @Test
+    public void estPremierNombre1Test() throws NombreNegatifException
     {
         assertEquals(FeuUtils.estPremier(1), false);
     }
     
     @Test
-    public void estPremierTest()
+    public void estPremierTest() throws NombreNegatifException
     {
         assertEquals(FeuUtils.estPremier(73), true);
     }
     
     @Test
-    public void estPremierNombreNegatifExceptionTest()
+    public void estPremierTestTresGrand() throws NombreNegatifException
     {
-        assertEquals(FeuUtils.estPremier(1), false);
+        assertEquals(FeuUtils.estPremier(1000000087), true);
+    }
+    
+    
+    @Test(expected=NombreNegatifException.class)
+    public void estPremierNombreNegatifExceptionTest() throws NombreNegatifException
+    {
+        FeuUtils.estPremier(-1);
     }
     
     @Test
-    public void estPremierNombreDecimaleExceptionTest()
+    public void estPremierNombreDecimaleExceptionTest() throws NombreNegatifException
     {
         assertEquals(FeuUtils.estPremier(1), false);
     }
