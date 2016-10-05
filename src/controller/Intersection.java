@@ -12,6 +12,7 @@ public class Intersection
     private static final int NB_FEUX = 4;
     private Feu[] feux;
     private Timer chrono;
+    private boolean estMaintenance;
 
     /**
      * Constructeur de l'intesection
@@ -31,6 +32,15 @@ public class Intersection
         // voir comment le chrono fonctionne peut-être en prendre un autre.
         this.chrono = new Timer();
         this.feux = feux;
+        this.estMaintenance = false;
+    }
+
+    public Intersection(Feu[] feux, boolean estMaintenance) 
+    {
+        // voir comment le chrono fonctionne peut-être en prendre un autre.
+        this.chrono = new Timer();
+        this.feux = feux;
+        this.estMaintenance = estMaintenance;
     }
     
     public Feu[] getFeux()
@@ -47,12 +57,40 @@ public class Intersection
      * Change la couleur des feux
      * @return retourne la nouvelle couleurs des feux
      */
-    public Feu[] changeFeux(){
+    public Feu[] changeFeuxAJaunes(){
+        for(int i = 0; i < this.feux.length; i++){
+            if(feux[i].equals(Feu.VERT)){
+                feux[i] = Feu.JAUNE;
+            }
+        }
         return this.feux;
     }
     
-    public boolean maintenance(){
-        return false;
+    public Feu[] inverseFeux(){
+        for(int i = 0; i < this.feux.length; i++){
+            if(feux[i].equals(Feu.JAUNE)){
+                feux[i] = Feu.ROUGE;
+            }
+            if(feux[i].equals(Feu.ROUGE)){
+                feux[i] = Feu.VERT;
+            }
+        }
+        return this.feux;
+    }
+    
+    public Intersection maintenance(){
+        for(int i = 0; i < this.feux.length; i++){
+                feux[i] = Feu.ROUGE;
+        }
+        estMaintenance = true;
+        return this;
+    }
+    
+    public Intersection retourDeMaintenance(){
+        feux[0] = Feu.VERT;
+        feux[2] = Feu.VERT;
+        estMaintenance = false;
+        return this;
     }
 
 }
